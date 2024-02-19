@@ -108,8 +108,9 @@ VALUES
 	(3, 2),
 	(3, 4);
 
-SELECT MAX(name), MAX(duration)
-FROM Tracks;
+SELECT name, duration
+FROM Tracks
+WHERE duration = (SELECT MAX(duration FROM Tracks));
 
 SELECT name
 FROM Tracks
@@ -117,24 +118,29 @@ WHERE duration >= 3.5;
 
 SELECT name
 FROM Collections
-WHERE year_release <= 2020 AND year_release >= 2018;
+WHERE year_release BETWEEN 2020 AND 2018;
 
 SELECT name
 FROM Musician
-WHERE LENGTH(name) = 1;
+WHERE name NOT LIKE '% %';
 
 SELECT name
 FROM Tracks
 WHERE name LIKE '%Моя%' OR name LIKE '%My%';
 
-SELECT name, musician_id
+SELECT COUNT(musician_id)
 FROM MusicianAlbums ma
 LEFT JOIN Musician m ON ma.musician_id = m.musician_id;
 
 SELECT COUNT(track_id)
 FROM Tracks t
 LEFT JOIN Albums a ON t.track_id = a.album_id
-WHERE year_release > 2018 AND year_release < 2021;
+WHERE year_release BETWEEN 2018 AND 2021;
+
+SELECT name
+FROM Musician
+WHERE ,
+LEFT JOIN Albums a on a.year_release = ma.year_release,
 
 
 
