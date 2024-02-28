@@ -82,8 +82,8 @@ VALUES
 
 INSERT INTO Collections (name, year_release)
 VALUES
-	('Мои любимые песни', 2023),
-	('Imagine Dragons', 2005),
+	('МЛП', 2023),
+	('ID', 2005),
 	('Собрник 2', 2010),
 	('Собрник 3', 2015);
 INSERT INTO CollectionTrack (collection_id, track_id)
@@ -128,20 +128,33 @@ SELECT name
 FROM Tracks
 WHERE name LIKE '%Моя%' OR name LIKE '%My%';
 
-SELECT COUNT(musician_id)
-FROM MusicianAlbums ma
-LEFT JOIN Musician m ON ma.musician_id = m.musician_id;
+SELECT g.name, COUNT(musician_id) from genremusician gm
+JOIN genres g on g.genre_id = gm.genre_id
+GROUP BY gm.genre_id, g.name;
 
-SELECT COUNT(track_id)
-FROM Tracks t
-LEFT JOIN Albums a ON t.track_id = a.album_id
-WHERE year_release BETWEEN 2018 AND 2021;
+-- задание 3, запрос 3
+SELECT AVG(t.duration)
+FROM Albums a
+LEFT JOIN Tracks t  ON a.album_id = t.album_id
+GROUP BY a.album_id;
 
-SELECT name
-FROM Musician
-WHERE ,
-LEFT JOIN Albums a on a.year_release = ma.year_release,
 
+-- задание 3, запрос 4
+SELECT M.name
+FROM Musician M
+JOIN MusicianAlbums MA ON MA.musician_id = MA.musician_id
+JOIN Albums A on A.album_id = MA.album_id
+WHERE A.year_release != 2020;
+
+-- задание 3, запрос 5
+SELECT C.name
+FROM Collections C
+JOIN CollectionTrack CT ON C.collection_id = CT.collection_id
+JOIN Tracks T ON CT.track_id = T.track_id
+JOIN Albums A ON T.album_id = A.album_id
+JOIN MusicianAlbums MA ON A.album_id = MA.album_id
+JOIN Musician M on M.musician_id = MA.musician_id
+WHERE 'Imagine Dragons' = M.name;
 
 
 
